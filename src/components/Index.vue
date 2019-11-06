@@ -1,5 +1,10 @@
 <template>
 <div class="main-container">
+  <div @click="toggleTheme" class="theme-switch">
+    <div class="track">
+      <div class="thumb" />
+    </div>
+  </div>
   <!-- <div class="big-title w100">
     Epic Todo-List
   </div> -->
@@ -21,7 +26,8 @@ export default {
   data () {
     return {
       input: 'Create a Todo!',
-      list: []
+      list: [],
+      darkTheme: true
     }
   },
   computed: {
@@ -54,6 +60,14 @@ export default {
     loadFromLocal () {
       let list = localStorage.getItem('todos')
       this.list = !list ? [] : JSON.parse(list)
+    },
+    toggleTheme () {
+      let theme = this.darkTheme ? 'light' : 'dark'
+      this.darkTheme = !this.darkTheme
+      console.log(theme)
+      document.documentElement.style.setProperty('--background-color', 'var(--' + theme + '-bg)')
+      document.documentElement.style.setProperty('--text-color', 'var(--' + theme + '-text-color)')
+      document.documentElement.style.setProperty('--secondary', 'var(--' + theme + '-secondary)')
     }
   }
 }
@@ -95,5 +109,28 @@ export default {
   align-items: center;
   padding: 3em;
   padding-top: 0;
+}
+
+.theme-switch {
+  position: fixed;
+  bottom: 1em;
+  right: 1em;
+
+  .track {
+    position: relative;
+    height: 6em;
+    width: 3em;
+    background-color: var(--secondary);
+
+    .thumb {
+      $size: 2em;
+      $sides: $size / 4;
+      position: absolute;
+      height: $size;
+      left: $sides;
+      right: $sides;
+      background-color: var(--text-color);
+    }
+  }
 }
 </style>

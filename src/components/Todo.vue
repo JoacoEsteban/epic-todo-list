@@ -34,13 +34,13 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-  background-color: var(--dark-secondary);
+  background-color: var(--secondary);
   padding: 0;
   margin-bottom: 1em;
   // width: 100%;
   border-radius: .3em;
   $transition: .3s ease;
-  transition: transform $transition, opacity $transition, padding $transition;
+  transition: transform $transition, opacity $transition, padding $transition, background $transition;
   transform-origin: top;
   transform: scale(.2);
   opacity: 0;
