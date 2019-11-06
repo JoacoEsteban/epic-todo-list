@@ -1,7 +1,9 @@
 <template>
 <div :class="{'pull': pull}" class="container">
   <div class="title">{{todo.text}}</div>
-
+  <div class="point75-em">
+    Created <strong>{{todo.created | time}}</strong>
+  </div>
 </div>
 </template>
 
@@ -28,10 +30,14 @@ export default {
 
 <style lang="scss" scoped>
 .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
   background-color: var(--dark-secondary);
   padding: 0;
   margin-bottom: 1em;
-  width: 100%;
+  // width: 100%;
   border-radius: .3em;
   $transition: .3s ease;
   transition: transform $transition, opacity $transition, padding $transition;
@@ -43,9 +49,13 @@ export default {
   }
 
   &.pull {
-    padding: 3em 0;
+    padding: 2em 3em;
     transform: scale(1);
     opacity: 1;
   }
+}
+
+.title {
+  margin-bottom: .5em;
 }
 </style>
