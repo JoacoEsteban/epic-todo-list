@@ -26,6 +26,9 @@ export default {
   },
   computed: {
   },
+  created () {
+    this.loadFromLocal()
+  },
   methods: {
     submit () {
       let text = this.input.trim()
@@ -43,6 +46,14 @@ export default {
       }
 
       this.list = [todo, ...this.list]
+      this.saveToLocal()
+    },
+    saveToLocal () {
+      localStorage.setItem('todos', JSON.stringify(this.list))
+    },
+    loadFromLocal () {
+      let list = localStorage.getItem('todos')
+      this.list = !list ? [] : JSON.parse(list)
     }
   }
 }
