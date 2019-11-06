@@ -7,7 +7,7 @@
     <input @keyup.enter="submit" v-model="input" type="text">
   </div>
   <div class="list">
-    <todo v-for="todo in list" :key="todo.id" :todo="todo" />
+    <todo class="todolete" v-for="todo in list" :key="todo.id" :todo="todo" />
   </div>
 </div>
 </template>
@@ -82,5 +82,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 3em;
+  padding-top: 0;
 }
 </style>
