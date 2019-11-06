@@ -1,7 +1,33 @@
 @import './helpers';
-$bg: #222;
-$color: #ccc;
+:root {
+    --dark-bg: #222;
+    --light-text-color: #ccc;
+    --dark-secondary: #555;
+    
+    
+    --light-bg: #f2f2f2;
+    --dark-text-color: #222;
+    --light-secondary: #eee;
+
+    
+    --background-color: var(--dark-bg);
+    --text-color: var(--light-text-color);
+    --secondary: var(--dark-secondary)
+}
 body {
-    background-color: $bg;
-    color: $color;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.title {
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.big-title {
+    @extend .title;
+    font-size: 3em;
 }
