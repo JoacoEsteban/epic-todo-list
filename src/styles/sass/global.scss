@@ -1,0 +1,7 @@
+@import './helpers';
+$bg: #222;
+$color: #ccc;
+body {
+    background-color: $bg;
+    color: $color;
+}
