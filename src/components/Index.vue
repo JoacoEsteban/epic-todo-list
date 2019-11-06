@@ -1,8 +1,9 @@
 <template>
 <div class="main-container">
   <div @click="toggleTheme" class="theme-switch">
-    <div class="track">
-      <div class="thumb" />
+    <div
+    class="track box-shadow">
+      <div class="thumb" :class="{'down': darkTheme}" />
     </div>
   </div>
   <!-- <div class="big-title w100">
@@ -68,6 +69,7 @@ export default {
       document.documentElement.style.setProperty('--background-color', 'var(--' + theme + '-bg)')
       document.documentElement.style.setProperty('--text-color', 'var(--' + theme + '-text-color)')
       document.documentElement.style.setProperty('--secondary', 'var(--' + theme + '-secondary)')
+      document.documentElement.style.setProperty('--box-shadow-color', 'var(--' + theme + '-box-shadow)')
     }
   }
 }
@@ -117,19 +119,37 @@ export default {
   right: 1em;
 
   .track {
+    cursor: pointer;
     position: relative;
     height: 6em;
     width: 3em;
     background-color: var(--secondary);
-
+    border-radius: 2em;
+    transition: transform var(--transition);
+    &:hover {
+      transform: scale(1.1)
+    }
+    &:active {
+      transform: scale(.98)
+    }
     .thumb {
       $size: 2em;
       $sides: $size / 4;
+
+      background-color: var(--text-color);
       position: absolute;
+      border-radius: 50%;
+
       height: $size;
       left: $sides;
       right: $sides;
-      background-color: var(--text-color);
+      transition: top var(--transition);
+
+      top: $sides;
+
+      &.down {
+        top: calc(100% - #{$size} - #{$sides})
+      }
     }
   }
 }

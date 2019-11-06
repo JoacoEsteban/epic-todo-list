@@ -1,5 +1,5 @@
 <template>
-<div :class="{'pull': pull}" class="container">
+<div :class="{'pull': pull}" class="container box-shadow">
   <div class="title">{{todo.text}}</div>
   <div class="point75-em">
     Created <strong>{{todo.created | time}}</strong>
@@ -39,7 +39,7 @@ export default {
   margin-bottom: 1em;
   // width: 100%;
   border-radius: .3em;
-  $transition: .3s ease;
+  $transition: var(--transition);
   transition: transform $transition, opacity $transition, padding $transition, background $transition;
   transform-origin: top;
   transform: scale(.2);
@@ -47,7 +47,6 @@ export default {
   &:nth-last-child(1) {
     margin-bottom: 0;
   }
-
   &.pull {
     padding: 2em 3em;
     transform: scale(1);
