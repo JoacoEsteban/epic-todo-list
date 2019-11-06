@@ -2,7 +2,7 @@
 <div class="main-container">
   <div @click="toggleTheme" class="theme-switch">
     <div
-    class="track box-shadow">
+    class="track box-shadow pointer-animations">
       <div class="thumb" :class="{'down': darkTheme}" />
     </div>
   </div>
@@ -13,7 +13,7 @@
     <input @keyup.enter="submit" v-model="input" type="text">
   </div>
   <div class="list">
-    <todo class="todolete" v-for="todo in list" :key="todo.id" :todo="todo" />
+    <todo @delete="deleteTodo(todo.id)" v-for="todo in list" :key="todo.id" :todo="todo" />
   </div>
 </div>
 </template>
@@ -53,6 +53,10 @@ export default {
       }
 
       this.list = [todo, ...this.list]
+      this.saveToLocal()
+    },
+    deleteTodo (id) {
+      this.list = this.list.filter(todo => todo.id !== id)
       this.saveToLocal()
     },
     saveToLocal () {
@@ -126,12 +130,6 @@ export default {
     background-color: var(--secondary);
     border-radius: 2em;
     transition: transform var(--transition);
-    &:hover {
-      transform: scale(1.1)
-    }
-    &:active {
-      transform: scale(.98)
-    }
     .thumb {
       $size: 2em;
       $sides: $size / 4;
