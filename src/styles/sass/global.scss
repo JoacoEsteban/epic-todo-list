@@ -47,3 +47,19 @@ body {
     @extend .title;
     font-size: 3em;
 }
+
+.std-input {
+    font-size: 2em;
+    text-align: center;
+    margin-bottom: .5em;
+    width: 100%;
+    font-family: inherit;
+    font-weight: bold;
+    box-sizing: border-box;
+    width: 100%;
+    background-color: transparent;
+    color: inherit;
+    outline: 0;
+    border: 0;
+    border-bottom: .05em solid var(--text-color)
+}

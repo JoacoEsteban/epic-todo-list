@@ -13,7 +13,10 @@
     <input @keyup.enter="submit" v-model="input" type="text">
   </div>
   <div class="list">
-    <todo @delete="deleteTodo(todo.id)" v-for="todo in list" :key="todo.id" :todo="todo" />
+    <todo
+    @delete="deleteTodo(todo.id)"
+    @edit="editTodo(todo.id, $event)"
+    v-for="todo in list" :key="todo.id" :todo="todo" />
   </div>
 </div>
 </template>
@@ -49,7 +52,7 @@ export default {
       let todo = {
         text,
         id,
-        created: new Date()
+        edited: new Date()
       }
 
       this.list = [todo, ...this.list]
@@ -57,6 +60,12 @@ export default {
     },
     deleteTodo (id) {
       this.list = this.list.filter(todo => todo.id !== id)
+      this.saveToLocal()
+    },
+    editTodo (id, text) {
+      let todo = this.list.find(todo => todo.id === id)
+      todo.text = text
+      todo.edited = new Date()
       this.saveToLocal()
     },
     saveToLocal () {
