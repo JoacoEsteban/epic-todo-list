@@ -1,38 +1,42 @@
 <template>
 <div class="main-container">
-  <div @click="toggleTheme" class="theme-switch">
-    <div
-    class="track box-shadow pointer-animations">
-      <div class="thumb" :class="{'down': darkTheme}" />
-    </div>
-  </div>
-  <!-- <div class="big-title w100">
-    Epic Todo-List
-  </div> -->
+  <Toggle class="theme-switch" @click="toggleTheme" :val="darkTheme" />
   <div class="input-container">
     <input @keyup.enter="submit" v-model="input" type="text">
   </div>
-  <div class="list">
+  <div class="title mt-2">{{showingDone ? 'Done' : 'To Do'}}</div>
+  <Toggle class="done-switch" @click="toggleDone" :val="!showingDone" />
+  <div v-if="!showingDone" class="list undone">
     <todo
     @delete="deleteTodo(todo.id)"
     @edit="editTodo(todo.id, $event)"
     @check="checkTodo(todo.id)"
     v-for="todo in undone" :key="todo.id" :todo="todo" />
   </div>
+  <div v-if="showingDone" class="list done">
+    <todo
+    @delete="deleteTodo(todo.id)"
+    @edit="editTodo(todo.id, $event)"
+    @check="checkTodo(todo.id)"
+    v-for="todo in done" :key="todo.id" :todo="todo" />
+  </div>
 </div>
 </template>
 
 <script>
 import Todo from './Todo'
+import Toggle from './Toggle'
 export default {
   components: {
-    Todo
+    Todo,
+    Toggle
   },
   data () {
     return {
       input: 'Create a Todo!',
       list: [],
-      darkTheme: true
+      darkTheme: true,
+      showingDone: false
     }
   },
   computed: {
@@ -95,6 +99,9 @@ export default {
       document.documentElement.style.setProperty('--text-color', 'var(--' + theme + '-text-color)')
       document.documentElement.style.setProperty('--secondary', 'var(--' + theme + '-secondary)')
       document.documentElement.style.setProperty('--box-shadow-color', 'var(--' + theme + '-box-shadow)')
+    },
+    toggleDone () {
+      this.showingDone = !this.showingDone
     }
   }
 }
@@ -118,6 +125,7 @@ export default {
     font-size: 5em;
     text-align: center;
     margin: 1em;
+    margin-bottom: 0;
     width: 100%;
     font-family: inherit;
     font-weight: bold;
@@ -142,34 +150,13 @@ export default {
   position: fixed;
   bottom: 1em;
   right: 1em;
-
-  .track {
-    cursor: pointer;
-    position: relative;
-    height: 6em;
-    width: 3em;
-    background-color: var(--secondary);
-    border-radius: 2em;
-    transition: transform var(--transition);
-    .thumb {
-      $size: 2em;
-      $sides: $size / 4;
-
-      background-color: var(--text-color);
-      position: absolute;
-      border-radius: 50%;
-
-      height: $size;
-      left: $sides;
-      right: $sides;
-      transition: top var(--transition);
-
-      top: $sides;
-
-      &.down {
-        top: calc(100% - #{$size} - #{$sides})
-      }
-    }
-  }
+}
+.done-switch {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(90deg);
+  margin-bottom: 1em;
 }
 </style>
