@@ -16,7 +16,8 @@
     <todo
     @delete="deleteTodo(todo.id)"
     @edit="editTodo(todo.id, $event)"
-    v-for="todo in list" :key="todo.id" :todo="todo" />
+    @check="checkTodo(todo.id)"
+    v-for="todo in undone" :key="todo.id" :todo="todo" />
   </div>
 </div>
 </template>
@@ -35,6 +36,12 @@ export default {
     }
   },
   computed: {
+    undone () {
+      return this.list.filter(todo => !todo.done)
+    },
+    done () {
+      return this.list.filter(todo => todo.done)
+    }
   },
   created () {
     this.loadFromLocal()
@@ -52,6 +59,7 @@ export default {
       let todo = {
         text,
         id,
+        done: false,
         edited: new Date()
       }
 
@@ -67,6 +75,10 @@ export default {
       todo.text = text
       todo.edited = new Date()
       this.saveToLocal()
+    },
+    checkTodo (id) {
+      this.list.find(todo => todo.id === id).done = true
+      saveToLocal()
     },
     saveToLocal () {
       localStorage.setItem('todos', JSON.stringify(this.list))

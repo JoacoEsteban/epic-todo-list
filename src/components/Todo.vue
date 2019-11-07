@@ -16,7 +16,7 @@
     </svg>
   </div>
   <input ref="input" class="std-input" @keyup.enter="confirmEdit" @keyup.esc="editing = false" v-if="editing" v-model="text" type="text">
-  <div v-if="!editing" class="title">{{todo.text}}</div>
+  <div @dblclick="editTodo" v-if="!editing" class="title">{{todo.text}}</div>
   <div class="point75-em">
     Last Edited <strong>{{todo.edited | time}}</strong>
   </div>
@@ -40,9 +40,12 @@ export default {
   },
   methods: {
     deleteTodo () {
+      this.hideAndEmit('delete')
+    },
+    hideAndEmit (msg) {
       this.pull = false
       setTimeout(() => {
-        this.$emit('delete')
+        this.$emit(msg)
       }, 300)
     },
     editTodo () {
@@ -58,7 +61,7 @@ export default {
       this.text = ''
     },
     checkTodo () {
-
+      this.hideAndEmit('check')
     }
   },
   mounted () {
