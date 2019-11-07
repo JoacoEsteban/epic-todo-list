@@ -7,7 +7,7 @@
   </div>
   <div class="title">{{todo.text}}</div>
   <div class="point75-em">
-    Created <strong>{{todo.created | time}}</strong>
+    Last Edited <strong>{{todo.created | time}}</strong>
   </div>
 </div>
 </template>
@@ -79,6 +79,7 @@ export default {
 
 .title {
   margin-bottom: .5em;
+  word-break: break-all;
 }
 
 .delete-button {
