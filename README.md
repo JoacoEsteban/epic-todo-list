@@ -1,6 +1,8 @@
 # epic-todo-list
 
-> Simple & elegant Todo list
+> Simple & elegant Todo list  
+> Check it out at https://epic-todo-list.herokuapp.com/  
+> Backend: https://github.com/JoacoEsteban/epic-todo-list-backend  
 
 ## Build Setup
 

@@ -19,7 +19,9 @@ export default {
 
 <style lang="scss" scoped>
 .toggle {
+  pointer-events: none;
   .track {
+    pointer-events: all;
     cursor: pointer;
     position: relative;
     height: 6em;
