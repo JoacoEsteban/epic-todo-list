@@ -73,7 +73,7 @@ export default {
       this.list.push(res.data)
     },
     async deleteTodo (id) {
-      let res = await axios.delete(url + '/' + id)
+      res = await axios.delete(url + '/' + id)
       this.list = this.list.filter(todo => todo._id !== id)
     },
     async editTodo (id, text) {
