@@ -1,6 +1,7 @@
 <template>
-  <div @click="$emit('click')" class="toggle">
+  <div class="toggle">
     <div
+    @click="$emit('click')"
     class="track box-shadow pointer-animations">
       <div class="thumb" :class="{'down': val}" />
     </div>

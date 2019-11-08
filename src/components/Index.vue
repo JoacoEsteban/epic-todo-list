@@ -8,17 +8,17 @@
   <Toggle class="done-switch" @click="toggleDone" :val="!showingDone" />
   <div v-if="!showingDone" class="list undone">
     <todo
-    @delete="deleteTodo(todo.id)"
-    @edit="editTodo(todo.id, $event)"
-    @check="checkTodo(todo.id)"
-    v-for="todo in undone" :key="todo.id" :todo="todo" />
+    @delete="deleteTodo(todo._id)"
+    @edit="editTodo(todo._id, $event)"
+    @check="checkTodo(todo._id)"
+    v-for="todo in undone" :key="todo._id" :todo="todo" />
   </div>
   <div v-if="showingDone" class="list done">
     <todo
-    @delete="deleteTodo(todo.id)"
-    @edit="editTodo(todo.id, $event)"
-    @check="checkTodo(todo.id)"
-    v-for="todo in done" :key="todo.id" :todo="todo" />
+    @delete="deleteTodo(todo._id)"
+    @edit="editTodo(todo._id, $event)"
+    @check="checkTodo(todo._id)"
+    v-for="todo in done" :key="todo._id" :todo="todo" />
   </div>
 </div>
 </template>
@@ -68,22 +68,28 @@ export default {
         edited: new Date()
       }
 
-      await axios.post(url, todo)
-      this.list.push(todo)
+      let res = await axios.post(url, todo)
+      this.list.push(res.data)
     },
-    deleteTodo (id) {
-      this.list = this.list.filter(todo => todo.id !== id)
-      this.saveToLocal()
+    async deleteTodo (id) {
+      let res = await axios.delete(url + '/' + id)
+      console.log(res)
+      this.list = this.list.filter(todo => todo._id !== id)
     },
-    editTodo (id, text) {
-      let todo = this.list.find(todo => todo.id === id)
+    async editTodo (id, text) {
+      let index = this.list.findIndex(todo => todo._id === id)
+      let todo = this.list[index]
+      if (text === '' || todo.text === text) return
       todo.text = text
       todo.edited = new Date()
-      this.saveToLocal()
+
+      let res = await axios.put(url + '/' + id, todo)
+      this.list.splice(index, 1, res.data)
     },
-    checkTodo (id) {
-      this.list.find(todo => todo.id === id).done = true
-      this.saveToLocal()
+    async checkTodo (id) {
+      console.log('idd', id)
+      let res = await axios.post(url + '/check/' + id)
+      this.list.find(todo => todo._id === id).done = true
     },
     saveToLocal () {
       localStorage.setItem('todos', JSON.stringify(this.list))
@@ -93,9 +99,8 @@ export default {
       this.list = !list ? [] : JSON.parse(list)
     },
     async getTodos () {
-      let todos = await axios.get(url)
-      console.log(todos.data)
-      this.list = todos.data
+      let res = await axios.get(url)
+      this.list = res.data
     },
     toggleTheme () {
       let theme = this.darkTheme ? 'light' : 'dark'
