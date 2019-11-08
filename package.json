@@ -6,13 +6,15 @@
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "prod": "webpack-dev-server --inline --progress --config build/webpack.prod.conf.js",
+    "prod": "npm run build && npm run serve",
+    "serve": "live-server dist",
     "start": "npm run prod",
     "lint": "eslint --ext .js,.vue src",
     "build": "node build/build.js"
   },
   "dependencies": {
     "axios": "^0.19.0",
+    "live-server": "^1.2.1",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },
