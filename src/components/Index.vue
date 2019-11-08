@@ -74,7 +74,6 @@ export default {
     },
     async deleteTodo (id) {
       let res = await axios.delete(url + '/' + id)
-      console.log(res)
       this.list = this.list.filter(todo => todo._id !== id)
     },
     async editTodo (id, text) {
@@ -89,7 +88,7 @@ export default {
     },
     async checkTodo (id) {
       console.log('idd', id)
-      let res = await axios.post(url + '/check/' + id)
+      await axios.post(url + '/check/' + id)
       this.list.find(todo => todo._id === id).done = true
     },
     saveToLocal () {
