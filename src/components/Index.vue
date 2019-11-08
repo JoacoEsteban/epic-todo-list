@@ -28,7 +28,6 @@ import Todo from './Todo'
 import Toggle from './Toggle'
 import axios from 'axios'
 const url = process.env.BACKEND + '/api/todos'
-console.log('URL::::', url)
 export default {
   components: {
     Todo,
@@ -87,7 +86,6 @@ export default {
       this.list.splice(index, 1, res.data)
     },
     async checkTodo (id) {
-      console.log('idd', id)
       await axios.post(url + '/check/' + id)
       this.list.find(todo => todo._id === id).done = true
     },
@@ -105,7 +103,6 @@ export default {
     toggleTheme () {
       let theme = this.darkTheme ? 'light' : 'dark'
       this.darkTheme = !this.darkTheme
-      console.log(theme)
       document.documentElement.style.setProperty('--background-color', 'var(--' + theme + '-bg)')
       document.documentElement.style.setProperty('--text-color', 'var(--' + theme + '-text-color)')
       document.documentElement.style.setProperty('--secondary', 'var(--' + theme + '-secondary)')

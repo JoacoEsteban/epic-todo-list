@@ -1,5 +1,5 @@
 'use strict'
 module.exports = {
   NODE_ENV: '"production"',
-  BACKEND: "'http://localhost:8000'"
+  BACKEND: "'https://epic-todo-list-backend.herokuapp.com'"
 }
