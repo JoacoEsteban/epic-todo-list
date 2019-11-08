@@ -26,6 +26,8 @@
 <script>
 import Todo from './Todo'
 import Toggle from './Toggle'
+import axios from 'axios'
+const url = process.env.BACKEND + '/api/todos'
 export default {
   components: {
     Todo,
@@ -48,7 +50,8 @@ export default {
     }
   },
   created () {
-    this.loadFromLocal()
+    // this.loadFromLocal()
+    this.getTodos()
   },
   methods: {
     submit () {
@@ -58,17 +61,15 @@ export default {
       this.createTodo(text)
       this.input = ''
     },
-    createTodo (text) {
-      let id = this.list.length === 0 ? 1 : this.list[0].id + 1
+    async createTodo (text) {
       let todo = {
         text,
-        id,
         done: false,
         edited: new Date()
       }
 
-      this.list = [todo, ...this.list]
-      this.saveToLocal()
+      await axios.post(url, todo)
+      this.list.push(todo)
     },
     deleteTodo (id) {
       this.list = this.list.filter(todo => todo.id !== id)
@@ -82,7 +83,7 @@ export default {
     },
     checkTodo (id) {
       this.list.find(todo => todo.id === id).done = true
-      saveToLocal()
+      this.saveToLocal()
     },
     saveToLocal () {
       localStorage.setItem('todos', JSON.stringify(this.list))
@@ -90,6 +91,11 @@ export default {
     loadFromLocal () {
       let list = localStorage.getItem('todos')
       this.list = !list ? [] : JSON.parse(list)
+    },
+    async getTodos () {
+      let todos = await axios.get(url)
+      console.log(todos.data)
+      this.list = todos.data
     },
     toggleTheme () {
       let theme = this.darkTheme ? 'light' : 'dark'
