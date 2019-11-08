@@ -28,6 +28,7 @@ import Todo from './Todo'
 import Toggle from './Toggle'
 import axios from 'axios'
 const url = process.env.BACKEND + '/api/todos'
+console.log('URL::::', url)
 export default {
   components: {
     Todo,
